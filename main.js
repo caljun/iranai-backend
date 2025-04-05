@@ -10,7 +10,15 @@ const Comment = require("./models/Comment");
 const Notification = require("./models/Notification");
 
 const app = express();
-app.use(cors());
+
+const cors = require("cors");
+
+app.use(cors({
+  origin: "https://iranai-frontend.onrender.com",  // ←ここはあなたのフロントURLに合わせて
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
