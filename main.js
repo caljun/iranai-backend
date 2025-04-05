@@ -11,8 +11,6 @@ const Notification = require("./models/Notification");
 
 const app = express();
 
-const cors = require("cors");
-
 app.use(cors({
   origin: "https://iranai-frontend.onrender.com",  // ←ここはあなたのフロントURLに合わせて
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
