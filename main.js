@@ -8,6 +8,7 @@ require("dotenv").config();
 const Post = require("./models/Post");
 const Comment = require("./models/Comment");
 const Notification = require("./models/Notification");
+const User = require("./models/User");
 
 const app = express();
 ///cors
@@ -17,8 +18,6 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
-
-app.options("*", cors());  
 
 app.use(express.json());
 
@@ -44,8 +43,14 @@ function verifyToken(req, res, next) {
 // ユーザー登録
 app.post("/register", async (req, res) => {
   const { email, password } = req.body;
-  const hashed = await bcrypt.hash(password, 10);
-  res.json({ token: generateToken(email) });
+  try {
+    const hashed = await bcrypt.hash(password, 10);
+    const user = await User.create({ email, password: hashed }); // ← これが保存処理
+    res.json({ token: generateToken(user.email) });
+  } catch (err) {
+    console.error("ユーザー登録エラー:", err);
+    res.status(500).json({ message: "登録に失敗しました" });
+  }
 });
 
 // ログイン（今回は簡略化）
