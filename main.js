@@ -10,7 +10,7 @@ const Comment = require("./models/Comment");
 const Notification = require("./models/Notification");
 
 const app = express();
-
+///cors
 app.use(cors({
   origin: "https://iranai-frontend.onrender.com",  // ←ここはあなたのフロントURLに合わせて
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
