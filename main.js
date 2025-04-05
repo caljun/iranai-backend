@@ -14,7 +14,8 @@ const app = express();
 app.use(cors({
   origin: "https://iranai-frontend.onrender.com",  // ←ここはあなたのフロントURLに合わせて
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
 
 app.options("*", cors());  
