@@ -260,3 +260,31 @@ app.get("/posts/user-email/:email", async (req, res) => {
   }
 });
 
+// 🔹 プロフィール画像取得
+app.get("/user/profile-image", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email });
+    if (!user) return res.status(404).json({ message: "ユーザーが見つかりません" });
+    res.json({ profileImage: user.profileImage || null });
+  } catch (err) {
+    console.error("プロフィール画像取得エラー:", err);
+    res.status(500).json({ message: "画像取得エラー" });
+  }
+});
+
+// 🔹 プロフィール画像保存
+app.put("/user/profile-image", verifyToken, async (req, res) => {
+  try {
+    const { image } = req.body;
+    const updated = await User.findOneAndUpdate(
+      { email: req.user.email },
+      { profileImage: image },
+      { new: true }
+    );
+    res.json({ success: true, profileImage: updated.profileImage });
+  } catch (err) {
+    console.error("プロフィール画像保存エラー:", err);
+    res.status(500).json({ message: "画像保存エラー" });
+  }
+});
+
