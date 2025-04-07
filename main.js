@@ -239,17 +239,6 @@ app.put("/user/profile-image", verifyToken, async (req, res) => {
   }
 });
 
-// GET: プロフィール画像を取得（初回表示）
-app.get("/user/profile-image", verifyToken, async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.user.email });
-    res.json({ profileImage: user.profileImage || null });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "取得失敗" });
-  }
-});
-
 app.get("/posts/user-email/:email", async (req, res) => {
   try {
     const posts = await Post.find({ email: req.params.email }).sort({ createdAt: -1 });
