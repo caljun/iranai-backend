@@ -97,7 +97,7 @@ app.get("/posts/me", verifyToken, async (req, res) => {
 });
 
 // 投稿取得（詳細）
-app.get("/posts/:id", verifyToken, async (req, res) => {
+app.get("/posts/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "投稿が見つかりません" });
