@@ -259,3 +259,14 @@ app.put("/user/profile-image", verifyToken, async (req, res) => {
   }
 });
 
+// 他人のプロフィール画像取得（emailから）
+app.get("/user/profile-image/:email", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) return res.status(404).json({ message: "ユーザーが見つかりません" });
+    res.json({ profileImage: user.profileImage || null });
+  } catch (err) {
+    console.error("他人プロフィール画像取得エラー:", err);
+    res.status(500).json({ message: "画像取得エラー" });
+  }
+});
